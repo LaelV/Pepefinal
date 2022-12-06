@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Medecin;
+use App\Entity\Assistant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,9 +16,6 @@ class MedecinType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('assistant',EntityType::class, array(
-                'class'=>Assistant::class,
-                'choice_label'=>'login'))
             ->add('submit', SubmitType::class)
         ;
     }

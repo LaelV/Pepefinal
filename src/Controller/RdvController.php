@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\RDV;
+use App\Form\RDVType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,4 +26,23 @@ class RdvController extends AbstractController
             'lesRDV' => $lesRDV,
         ]);
     }
+    #[Route('/rdv/{id}', name: 'modif_rdv')]
+    public function modifRDV(ManagerRegistry $doctrine, Request $request, $id): Response
+    {
+        $em = $doctrine->getManager();
+        $unRDV= $doctrine->getRepository(RDV::class)->find($id);
+
+        $form = $this->createForm(RDVType::class, $unRDV);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($unRDV);
+            $em->flush();
+            return $this->redirectToRoute('app_rdv');
+        }
+        return $this->render('rdv/modif_rdv.html.twig', array(
+            'form'=>$form->createView(),
+            'unRDV'=> $unRDV,
+        ));
+    }
+
 }

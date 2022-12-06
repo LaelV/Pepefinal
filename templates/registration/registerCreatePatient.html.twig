@@ -11,4 +11,6 @@
         {{ form_row(registrationForm.mail) }}
         {{ form_row(registrationForm.submit) }}
     {{ form_end(registrationForm) }}
+
+    <a href="{{ path('app_register_patient') }}"><button>J'ai déjà créé un objet patient, passer à la création du compte</button></a>
 {% endblock %}
