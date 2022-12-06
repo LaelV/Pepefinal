@@ -3,6 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Medecin;
+use App\Entity\Patient;
+use App\Entity\Assistant;
+use App\Form\AssistantType;
+use App\Form\MedecinType;
 use App\Form\RegistrationFormType;
 use App\Form\AssistantRegistrationFormType;
 use App\Form\MedecinRegistrationFormType;
@@ -128,7 +133,7 @@ class RegistrationController extends AbstractController
     public function registerCreatePatient(Request $request, EntityManagerInterface $entityManager): Response
     {
         $patient = new Patient();
-        $form = $this->createForm(PatientFormType::class, $patient);
+        $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -147,7 +152,7 @@ class RegistrationController extends AbstractController
     public function registerCreateMedecin(Request $request, EntityManagerInterface $entityManager): Response
     {
         $medecin = new Medecin();
-        $form = $this->createForm(MedecinFormType::class, $medecin);
+        $form = $this->createForm(MedecinType::class, $medecin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -166,7 +171,7 @@ class RegistrationController extends AbstractController
     public function registerCreateAssistant(Request $request, EntityManagerInterface $entityManager): Response
     {
         $assistant = new Assistant();
-        $form = $this->createForm(AssistantFormType::class, $assistant);
+        $form = $this->createForm(AssistantType::class, $assistant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
