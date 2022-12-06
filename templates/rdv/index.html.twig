@@ -7,9 +7,9 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">Nom du patient <span id="name" class="arrow"><span></span><span></span></span> </th>
-							<th scope="col">Statut <span id="statut" class="arrow"><span></span><span></span></span></th>
-							<th scope="col">Durée <span id="duree" class="arrow"><span></span><span></span></span></th>
+							<th scope="col">Nom du patient <span id="p.nom" class="arrow"><span></span><span></span></span> </th>
+							<th scope="col">Statut <span id="s.libelle" class="arrow"><span></span><span></span></span></th>
+							<th scope="col">Durée <span id="r.duree" class="arrow"><span></span><span></span></span></th>
 							<th scope="col">Date <input type="text" id="datepicker"></th>
 						</tr>
 					</thead>
@@ -49,7 +49,9 @@ function formatDate(date) {
 $( function() {
     $( "#datepicker" ).datepicker({
 		onSelect: function(date) {
+			var url=document.location.toString();
 			dateFinal = formatDate(date);
+			var url=document.location.toString();
 			location.href = "/rdv?date="+dateFinal;
 		}
 	});
@@ -58,12 +60,20 @@ $( function() {
 $('.arrow').click(function() {
 	$('.active').removeClass('active');
     $(this).toggleClass('active');
-	var url=document.location;
-	if(url.includes("date")){
-		location.href += "&order="+this.id
-	}else{
-		location.href = "/rdv?order="+this.id
+	var url=document.location.toString();
+	//Verif if order existe deja
+	if(url.includes('p.nom')){
+		location.href.replace("p.nom",this.id);
+	}else if(url.includes('s.libelle')){
+		location.href.replace("s.libelle",this.id);
+	}else if(url.includes('r.duree')){
+		location.href.replace("r.duree",this.id);
 	}
+	//Verif date existe deja
+	if(url.includes('date')){
+		location.href += "&order="+this.id;
+	}
+	location.href = "/rdv?order="+this.id;
 });
 
 </script>
