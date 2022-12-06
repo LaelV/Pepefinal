@@ -39,28 +39,29 @@ class RDVRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return RDV[] Returns an array of RDV objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?RDV
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByDate($date,$order): array
+    {
+        if(!isset($date)){
+            $date = new \DateTime("2022-11-18");
+        }
+        if(!isset($order)){
+            $order = 'r.duree';
+            $ascdesc = "DESC";
+        }else{
+            $ascdesc = "ASC";
+        }
+        return $this->createQueryBuilder('a')
+            ->select(array('p.nom','s.libelle','r.duree','r.date','r.heure'))
+            ->from(RDV::class,'r')
+            ->innerjoin('r.patient','p')
+            ->innerjoin('r.statut','s')
+            ->where('r.date = :date')
+            ->setParameter('date',$date)
+            ->orderBy($order,$ascdesc)
+            ->getQuery()
+            ->getResult();
+        
+    }
+
 }
