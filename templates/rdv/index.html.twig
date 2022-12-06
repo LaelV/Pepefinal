@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pepepital
+{% endblock %}
+{% block body %}
+
+
+	<div class="d-flex flex-column justify-content-center p-5">
+		<div class="bg-light rounded">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Nom du patient <span id="name" class="arrow"><span></span><span></span></span> </th>
+							<th scope="col">Statut <span id="statut" class="arrow"><span></span><span></span></span></th>
+							<th scope="col">Durée <span id="duree" class="arrow"><span></span><span></span></span></th>
+							<th scope="col">Date <span id="date" class="arrow"><span></span><span></span></span><span><input type="text" id="datepicker"></span></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for unRDV in lesRDV %}
+							<tr>
+								<td>{{unRDV.nom}}</td>
+								<td>{{unRDV.libelle}}</td>
+                                <td>{{unRDV.duree}}h</td>
+								<td>{{unRDV.heure|date('H:i:s')}} | {{unRDV.date | date('Y-m-d')}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</tr>
+		</div>
+	</div>
+</tbody></table>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
+$('.arrow').click(function() {
+    $(this).toggleClass('active');
+	/*$sort = 'desc';
+	if(this.class == 'arrow'){
+		$sort = 'asc';
+	}
+	switch (this.id) {
+			case 'name': $name = $sort
+			break;
+			case 'statut': $statut = 'asc'
+			break;
+			case 'duree': $duree = 'asc'
+			break;
+			case 'date': $date = 'asc'
+			break;
+			default:
+    		console.log(`Error`);
+	}
+	$.ajax({
+  	type: "GET",
+  	url: "",
+  	data: {name: $name,
+	statut: $statut,
+	duree: $duree,
+	date: $date},
+	success: alert('POSTED')
+	});*/
+});
+
+$( function() {
+    $( "#datepicker" ).datepicker({
+		onSelect: function(date) {
+		   $.ajax({
+			type: "GET",
+			url: "{{path('app_rdv')}}",
+			data: {dateSelect: date},
+		  	success: alert('POSTED')
+		  });
+		}
+	 });
+} );
+</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+{% endblock %}
