@@ -11,6 +11,7 @@
 							<th scope="col">Statut <span id="statut" class="arrow"><span></span><span></span></span></th>
 							<th scope="col">Durée <span id="duree" class="arrow"><span></span><span></span></span></th>
 							<th scope="col">Date <input type="text" id="datepicker"></th>
+							<th scope="col"> Actions </th>
 						</tr>
 					</thead>
 					<tbody>
@@ -19,7 +20,8 @@
 								<td>{{unRDV.nom}}</td>
 								<td>{{unRDV.libelle}}</td>
                                 <td>{{unRDV.duree}}h</td>
-								<td>{{unRDV.heure|date('H:i:s')}} | {{unRDV.date | date('Y-m-d')}}</td>
+								<td>{{unRDV.heure|date('H:i:s')}} | {{unRDV.date | date('Y-m-d')}}</td>								
+								<td><a href='{{path("modif_rdv", {id:unRDV.id})}}'><button type="button">Modifier</button></a></td>
 							</tr>
 						{% endfor %}
 					</tbody>
@@ -27,8 +29,6 @@
 		</div>
 	</div>
 </tbody></table>
-
-
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>

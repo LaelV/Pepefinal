@@ -52,7 +52,7 @@ class RDVRepository extends ServiceEntityRepository
             $ascdesc = "ASC";
         }
         return $this->createQueryBuilder('a')
-            ->select(array('p.nom','s.libelle','r.duree','r.date','r.heure'))
+            ->select(array('p.nom','s.libelle','r.duree','r.date','r.heure', 'r.id'))
             ->from(RDV::class,'r')
             ->innerjoin('r.patient','p')
             ->innerjoin('r.statut','s')
