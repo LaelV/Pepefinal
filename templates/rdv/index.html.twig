@@ -32,6 +32,18 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
+
+addEventListener('load', (event) => {
+	var url=document.location.toString();
+	if(url.includes('p.nom')){
+		$("#p.nom").addClass('active');
+	}else if(url.includes('s.libelle')){
+		$("#s.libelle").addClass('active');
+	}else if(url.includes('r.duree')){
+		$("#r.duree").addClass('active');
+	}
+});
+
 function formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -56,10 +68,8 @@ $( function() {
 		}
 	});
 });
-
+	
 $('.arrow').click(function() {
-	$('.active').removeClass('active');
-    $(this).toggleClass('active');
 	var url=document.location.toString();
 	//Verif if order existe deja
 	if(url.includes('p.nom')){
