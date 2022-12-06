@@ -16,9 +16,6 @@ class MedecinType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('assistant',EntityType::class, array(
-                'class'=>Assistant::class,
-                'choice_label'=>'login'))
             ->add('submit', SubmitType::class)
         ;
     }
