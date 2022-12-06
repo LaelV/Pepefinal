@@ -2,20 +2,27 @@
 
 namespace App\Form;
 
+use App\Entity\RDV;
+use App\Entity\Statut;
 use App\Entity\Medecin;
-use App\Entity\Assistant;
+use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class MedecinType extends AbstractType
+class RDVType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
+            ->add('date')
+            ->add('heure')
+            ->add('medecin', EntityType::class, array(
+                'class'=>Medecin::class,
+                'choice_label'=>'nom'
+            ))
             ->add('submit', SubmitType::class)
         ;
     }
@@ -23,7 +30,7 @@ class MedecinType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Medecin::class,
+            'data_class' => RDV::class,
         ]);
     }
 }
