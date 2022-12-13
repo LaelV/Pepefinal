@@ -5,17 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-<<<<<<< HEAD
 use App\Form\PatientType;
-
-=======
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\RDV;
 use App\Entity\Statut;
 use App\Form\RDVType;
 use Doctrine\Persistence\ManagerRegistry;
->>>>>>> 126c2038c56ab7d783ae4937d1dba1ed41d507c3
 
 class PatientController extends AbstractController
 {

@@ -37,12 +37,9 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-<<<<<<< HEAD
-          - { path: '^/rdv', roles: ROLE_ASSISTANT }
-=======
+        - { path: '^/rdv', roles: ROLE_ASSISTANT }
         - { path: ^/register, roles: ROLE_MEDECIN }
         - { path: ^/patient/prendre-rdv, roles: ROLE_PATIENT }
->>>>>>> 126c2038c56ab7d783ae4937d1dba1ed41d507c3
 
 when@test:
     security:
