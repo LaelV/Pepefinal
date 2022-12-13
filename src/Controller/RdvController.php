@@ -3,27 +3,34 @@
 namespace App\Controller;
 
 use App\Entity\RDV;
-use App\Form\RDVType;
+use App\Form\ModifRDVType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RdvController extends AbstractController
 {
     #[Route('/rdv', name: 'app_rdv')]
     public function getListeRDV(ManagerRegistry $doctrine,Request $request): Response
-    {  
-        $date = $request->query->get('date');
-        $order = $request->query->get('order');
-        $entityManager = $doctrine->getManager();
-        $repo = $entityManager -> getRepository(RDV::class);
+    {
         $user = $this->getUser();
-        $medecin= $user->getMedecin()->getId();
-        $lesRDV = $repo->findByDate($date,$order,$medecin);
+        if($this->isGranted('ROLE_MEDECIN')){
+        $medecin= $user->getMedecin();
+        } else{
+            $medecin = $user->getAssistant()->getMedecin();
+        }
+
+        $rdv = $medecin->getRDVs();
+
+        # $lesRDV = $rdv->findByDate($date,$order,$medecin);
         return $this->render('rdv/index.html.twig', [
-            'lesRDV' => $lesRDV,
+            'lesRDV' => $rdv,
         ]);
     }
     #[Route('/rdv/{id}', name: 'modif_rdv')]
@@ -32,7 +39,7 @@ class RdvController extends AbstractController
         $em = $doctrine->getManager();
         $unRDV= $doctrine->getRepository(RDV::class)->find($id);
 
-        $form = $this->createForm(RDVType::class, $unRDV);
+        $form = $this->createForm(ModifRDVType::class, $unRDV);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $em->persist($unRDV);
@@ -43,6 +50,20 @@ class RdvController extends AbstractController
             'form'=>$form->createView(),
             'unRDV'=> $unRDV,
         ));
+    }
+    #[Route('/email', name: 'mail')]
+    public function sendEmail(MailerInterface $mailer): Response
+    {
+        $transport = Transport::fromDsn('native://default');
+        $mailer = new Mailer($transport);
+        $email = (new Email())
+            ->from('basile.mercado@gmail.com')
+            ->to('lael.vander@gmail.com')
+            ->subject('Test')
+            ->html('<p> Ceci est un test il ne faut pas paniquer !</p>');
+        $mailer->send($email);
+
+        return $this->render('principal/index.html.twig');
     }
 
     #[Route('/', name: 'app_principal')]
