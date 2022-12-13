@@ -29,23 +29,17 @@ class PatientController extends AbstractController
     #[Route('/patient/prendre-rdv', name: 'app_create_rdv')]
     public function prendreRdv(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
-        $date = $request->query->get('date');
-        $heure = $request->query->get('hour');
         $statut = $doctrine->getRepository(Statut::class)->find(1);
-
         $rdv = new RDV();
         $form = $this->createForm(RDVType::class, $rdv);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $dateformat = \DateTime::createFromFormat("d/m/Y",$date);
-            $hourformat = \DateTime::createFromFormat("H:m:s",$hour);
-            $rdv->setDate(new $dateformat->format("Y-m-d"));
-            $rdv->setHeure($hourformat);
+            $rdv->setDate(new \DateTime($request->get('datepicker')));
+            $rdv->setHeure(new \DateTime($request->get('timepicker')));
             $rdv->setPatient($this->getUser()->getPatient());
             $rdv->setStatut($statut);
             $rdv->setDuree(15);
-
             $entityManager->persist($rdv);
             $entityManager->flush();
 
