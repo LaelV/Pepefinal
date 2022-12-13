@@ -3,12 +3,44 @@
 {% block title %}Prendre rendez-vous{% endblock %}
 
 {% block body %}
-    <h1>Informations du rendez-vous</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.date) }}
-        {{ form_row(registrationForm.heure) }}
-        {{ form_row(registrationForm.medecin) }}
+    <h1>Informations du rendez-vous</h1>
+    {#{{ form_start(registrationForm) }}#}
+        Date <input type="text" id="datepicker">
+        Heure <input type="text" id="timepicker">
+        {#{{ form_row(registrationForm.medecin) }}
         {{ form_row(registrationForm.submit) }}
-    {{ form_end(registrationForm) }}
+    {{ form_end(registrationForm) }}#}
+
+    <script>
+    $( function() {
+    $("#datepicker").datepicker({
+        onSelect: function(date) {
+            setParameters('date',date);
+        }
+    });
+    });
+
+
+    $( function() {
+        $("#timepicker").timepicker({
+            timeFormat: 'h:mm',
+            minTime: '6',
+            maxTime: '6:00pm',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });
+
+    function setParameters(parameterName, parameterValue){
+        let parameters = new URLSearchParams(window.location.search);
+        return parameters.set(parameterName,parameterValue);
+    }
+    </script>
 {% endblock %}
