@@ -31,61 +31,6 @@
 </tbody></table>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script>
-
-addEventListener('load', (event) => {
-	var url=document.location.toString();
-	if(url.includes('p.nom')){
-		$("#p.nom").addClass('active');
-	}else if(url.includes('s.libelle')){
-		$("#s.libelle").addClass('active');
-	}else if(url.includes('r.duree')){
-		$("#r.duree").addClass('active');
-	}
-});
-
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-
-$( function() {
-    $( "#datepicker" ).datepicker({
-		onSelect: function(date) {
-			var url=document.location.toString();
-			dateFinal = formatDate(date);
-			var url=document.location.toString();
-			location.href = "/rdv?date="+dateFinal;
-		}
-	});
-});
-	
-$('.arrow').click(function() {
-	var url=document.location.toString();
-	//Verif if order existe deja
-	if(url.includes('p.nom')){
-		location.href.replace("p.nom",this.id);
-	}else if(url.includes('s.libelle')){
-		location.href.replace("s.libelle",this.id);
-	}else if(url.includes('r.duree')){
-		location.href.replace("r.duree",this.id);
-	}
-	//Verif date existe deja
-	if(url.includes('date')){
-		location.href += "&order="+this.id;
-	}
-	location.href = "/rdv?order="+this.id;
-});
-
-</script>
+<script src="/rdv.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 {% endblock %}
