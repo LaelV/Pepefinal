@@ -15,8 +15,8 @@ class ModifRDVType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder            
-            ->add('statut', EntityType::class, array('class'=>Statut::class, 'choice_label'=> 'libelle'))            
+        $builder
+            ->add('statut', EntityType::class, array('class'=>Statut::class, 'choice_label'=> 'libelle'))
             ->add('submit', SubmitType::class)
         ;
     }

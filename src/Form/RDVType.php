@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class RDVType extends AbstractType
 {
@@ -21,6 +23,8 @@ class RDVType extends AbstractType
                 'class'=>Medecin::class,
                 'choice_label'=>'nom'
             ))
+            ->add('date', DateTimeType::class)
+            ->add('duree', IntegerType::class)
             ->add('submit', SubmitType::class)
         ;
     }
