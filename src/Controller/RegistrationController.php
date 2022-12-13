@@ -3,18 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
-<<<<<<< HEAD
-use App\Entity\Medecin;
-use App\Entity\Patient;
-use App\Entity\Assistant;
-use App\Form\AssistantType;
-use App\Form\MedecinType;
-use App\Form\PatientType;
-=======
 use App\Entity\Patient;
 use App\Entity\Assistant;
 use App\Entity\Medecin;
->>>>>>> 126c2038c56ab7d783ae4937d1dba1ed41d507c3
 use App\Form\RegistrationFormType;
 use App\Form\AssistantRegistrationFormType;
 use App\Form\MedecinRegistrationFormType;
