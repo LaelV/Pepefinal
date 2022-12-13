@@ -17,10 +17,10 @@
 					<tbody>
 						{% for unRDV in lesRDV %}
 							<tr>
-								<td>{{unRDV.nom}}</td>
-								<td>{{unRDV.libelle}}</td>
+								<td>{{unRDV.patient.nom}}</td>
+								<td>{{unRDV.statut.libelle}}</td>
                                 <td>{{unRDV.duree}}h</td>
-								<td>{{unRDV.heure|date('H:i:s')}} | {{unRDV.date | date('Y-m-d')}}</td>								
+								<td>{{unRDV.heure|date('H:i')}} | {{unRDV.date | date('d/m/Y')}}</td>								
 								<td><a href='{{path("modif_rdv", {id:unRDV.id})}}'><button type="button">Modifier</button></a></td>
 							</tr>
 						{% endfor %}

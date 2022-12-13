@@ -18,19 +18,17 @@ class RdvController extends AbstractController
 {
     #[Route('/rdv', name: 'app_rdv')]
     public function getListeRDV(ManagerRegistry $doctrine,Request $request): Response
-    {  
-        $date = $request->query->get('date');
-        $order = $request->query->get('order');
-        $entityManager = $doctrine->getManager();
-        $rdv = $entityManager -> getRepository(RDV::class);
+    {
         $user = $this->getUser();
         if($this->isGranted('ROLE_MEDECIN')){
-        $medecin= $user->getMedecin()->getId();
+        $medecin= $user->getMedecin();
         } else{
-            $medecin = $user->getAssistant()->getMedecin()->getId();
+            $medecin = $user->getAssistant()->getMedecin();
         }
-        
-        #$lesRDV = $repo->findByDate($date,$order,$medecin);
+
+        $rdv = $medecin->getRDVs();
+
+        # $lesRDV = $rdv->findByDate($date,$order,$medecin);
         return $this->render('rdv/index.html.twig', [
             'lesRDV' => $rdv,
         ]);

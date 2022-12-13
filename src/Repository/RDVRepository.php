@@ -57,9 +57,9 @@ class RDVRepository extends ServiceEntityRepository
             ->innerjoin('r.patient','p')
             ->innerjoin('r.statut','s')
             ->innerjoin('r.medecin','m')
-            ->where('r.date = :date','m.id = :medecin_id')
-            ->setParameter('date',$date)
-            ->setParameter('medecin_id',$medecin)
+            #->where('r.date = :date','m.id = :medecin_id')
+            #->setParameter('date',$date)
+            #->setParameter('medecin_id',$medecin)
             ->orderBy($order,$ascdesc)
             ->getQuery()
             ->getResult();
