@@ -22,12 +22,17 @@ class RdvController extends AbstractController
         $date = $request->query->get('date');
         $order = $request->query->get('order');
         $entityManager = $doctrine->getManager();
-        $repo = $entityManager -> getRepository(RDV::class);
-        $user = $this->getUser();        
+        $rdv = $entityManager -> getRepository(RDV::class);
+        $user = $this->getUser();
+        if($this->isGranted('ROLE_MEDECIN')){
         $medecin= $user->getMedecin()->getId();
-        $lesRDV = $repo->findByDate($date,$order,$medecin);
+        } else{
+            $medecin = $user->getAssistant()->getMedecin()->getId();
+        }
+        
+        #$lesRDV = $repo->findByDate($date,$order,$medecin);
         return $this->render('rdv/index.html.twig', [
-            'lesRDV' => $lesRDV,
+            'lesRDV' => $rdv,
         ]);
     }
     #[Route('/rdv/{id}', name: 'modif_rdv')]

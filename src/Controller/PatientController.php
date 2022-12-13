@@ -65,7 +65,6 @@ class PatientController extends AbstractController
 
         return $this->render('patient/rdv.html.twig', [
             'rdvs' => $rdv,
-            'patient' => $user->getPatient(),
         ]);
     }
 
