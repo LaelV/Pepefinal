@@ -94,7 +94,6 @@ class Patient
     public function removeRDV(RDV $rDV): self
     {
         if ($this->RDVs->removeElement($rDV)) {
-            // set the owning side to null (unless already changed)
             if ($rDV->getPatient() === $this) {
                 $rDV->setPatient(null);
             }
