@@ -18,18 +18,26 @@
 						<a class="navbar-brand" href="https://www.youtube.com/watch?v=oHg5SJYRHA0">
 							<img src="https://emoji.gg/assets/emoji/3256_coronaHands.png" alt="PepeLogo" width="40">
 						</a>
-						{% if app.user is null %}
-							<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-						{% else %}
+						{% if is_granted('ROLE_PATIENT') %}
                         <li class="nav-item">
-							<a class="nav-link" href="{{ path('app_patient') }}">Indications</a>
+							<a class="nav-link" href="{{ path('app_patient') }}">Mon compte</a>
 						</li>
+						{% endif %}
+						{% if is_granted('ROLE_ASSISTANT') %}
 						<li class="nav-item">
 							<a class="nav-link" href="{{ path('app_rdv') }}">Rendez-vous</a>
 						</li>
+						{% endif %}
+						{% if is_granted('ROLE_MEDECIN') %}
 						<li class="nav-item">
-							<a class="nav-link" href="{{ path('app_register') }}">Enregistrer Compte</a>
-						</li>	
+							<a class="nav-link" href="{{ path('app_register') }}">Créer un compte</a>
+						</li>
+						{% endif %}
+						{% if app.user is null %}
+                        <li class="nav-item">
+							<a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+						</li>
+						{% else %}
                         <li class="nav-item">
 							<a class="nav-link">Connecté en tant que {{app.user.username}}</a>
 						</li>

@@ -20,7 +20,13 @@ class RdvController extends AbstractController
         $entityManager = $doctrine->getManager();
         $repo = $entityManager -> getRepository(RDV::class);
         $user = $this->getUser();
+
+        if($this->isGranted('ROLE_MEDECIN')){
         $medecin= $user->getMedecin()->getId();
+        } else{
+            $medecin = $user->getAssistant()->getMedecin()->getId();
+        }
+        
         $lesRDV = $repo->findByDate($date,$order,$medecin);
         return $this->render('rdv/index.html.twig', [
             'lesRDV' => $lesRDV,
