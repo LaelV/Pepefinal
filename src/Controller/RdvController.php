@@ -23,7 +23,7 @@ class RdvController extends AbstractController
         $order = $request->query->get('order');
         $entityManager = $doctrine->getManager();
         $repo = $entityManager -> getRepository(RDV::class);
-        $user = $this->getUser();
+        $user = $this->getUser();        
         $medecin= $user->getMedecin()->getId();
         $lesRDV = $repo->findByDate($date,$order,$medecin);
         return $this->render('rdv/index.html.twig', [
