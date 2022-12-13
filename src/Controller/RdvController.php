@@ -14,8 +14,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-
 class RdvController extends AbstractController
 {
     #[Route('/rdv', name: 'app_rdv')]
@@ -25,8 +23,10 @@ class RdvController extends AbstractController
         $order = $request->query->get('order');
         $entityManager = $doctrine->getManager();
         $repo = $entityManager -> getRepository(RDV::class);
-        $lesRDV = $repo->findByDate($date,$order);
-        return $this->render('/rdv/index.html.twig', [
+        $user = $this->getUser();
+        $medecin= $user->getMedecin()->getId();
+        $lesRDV = $repo->findByDate($date,$order,$medecin);
+        return $this->render('rdv/index.html.twig', [
             'lesRDV' => $lesRDV,
         ]);
     }
@@ -63,4 +63,9 @@ class RdvController extends AbstractController
         return $this->render('principal/index.html.twig');
     }
 
+    #[Route('/', name: 'app_principal')]
+    public function principal(): Response
+    {
+        return $this->render('principal/index.html.twig');
+    }
 }

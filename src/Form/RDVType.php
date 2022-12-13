@@ -12,12 +12,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-
 class RDVType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-
+    {   
         $builder
             ->add('date')
             ->add('heure')
