@@ -75,6 +75,8 @@ class PatientController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
+            $rdv->setDate(new \DateTime($request->get('datepicker')));
+            $rdv->setHeure(new \DateTime($request->get('timepicker')));
             $rdv->setPatient($this->getUser()->getPatient());
             $rdv->setStatut($statut);
             $rdv->setDuree(15);
